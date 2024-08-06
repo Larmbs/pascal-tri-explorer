@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let camera_pos = [0, 0];
+let camera_pos = [800, 400];
 const rowHeight = 80;
 const colWidth = 90;
 const circleRadius = 40;
