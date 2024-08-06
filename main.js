@@ -30,14 +30,16 @@ function get_color(integer) {
         "rgb(74, 99, 255)",
         "rgb(255, 240, 74)",
         "red",
+        "grey",
         "green",
         "purple",
+        "orange",
         "pink",
     ];
     if (integer == 0) {
         return "black";
     } else {
-        return colors[integer % colors.length];
+        return colors[Math.abs(integer) % colors.length];
     }    
 }
 
@@ -51,30 +53,27 @@ function draw() {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    const startX = 200 + camera_pos[0];
-    const startY = 50 + camera_pos[1];
-
     const visibleRows = Math.ceil(canvas.height / rowHeight) + 2;
-    const visibleCols = Math.ceil(canvas.width / colWidth);
-    let offset_X = -Math.round(camera_pos[0] / colWidth);
-    let offset_Y = -Math.round(camera_pos[1] / rowHeight);
+    const visibleCols = Math.ceil(canvas.width / colWidth) + 2;
+    let offset_X = -Math.round(camera_pos[0] / colWidth) - 1;
+    let offset_Y = -Math.round(camera_pos[1] / rowHeight) - 1 ;
 
     for (let i = offset_Y; i < visibleRows + offset_Y; i++) {
         for (let j = offset_X; j <= visibleCols + offset_X; j++) {
 
             let val = pascalValue(i, Math.round(j + i / 2));
 
-            let x = startX + (j + (i % 2) / 2) * colWidth;
-            let y = startY + i * rowHeight;
+            let x = camera_pos[0] + (j + (i % 2) / 2) * colWidth;
+            let y = camera_pos[1] + i * rowHeight;
 
             ctx.fillStyle = get_color(val);
             ctx.beginPath();
-            ctx.arc(x - 220, y - 50, circleRadius, 0, 2 * Math.PI);
+            ctx.arc(x, y, circleRadius, 0, 2 * Math.PI);
             ctx.fill();
             ctx.stroke();
 
             ctx.fillStyle = "black";
-            ctx.fillText(val, x - 220, y - 50);
+            ctx.fillText(val, x, y);
         }
     }
 }
@@ -85,19 +84,19 @@ function check(e) {
     var code = e.keyCode;
     switch (code) {
         case 37: // Left arrow key
-            camera_pos[0] += 5;
+            camera_pos[0] += 10;
             draw();
             break;
         case 38: // Up arrow key
-            camera_pos[1] += 5;
+            camera_pos[1] += 10;
             draw();
             break;
         case 39: // Right arrow key
-            camera_pos[0] -= 5;
+            camera_pos[0] -= 10;
             draw();
             break;
         case 40: // Down arrow key
-            camera_pos[1] -= 5;
+            camera_pos[1] -= 10;
             draw();
             break;
     }
