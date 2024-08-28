@@ -86,7 +86,7 @@ function draw() {
 
         ctx.fillStyle = get_color(val);
         ctx.beginPath();
-        ctx.arc(x, y, circleRadius, 0, 2 * Math.PI);
+        ctx.arc(x, y, circleRadius, 0, 2 * Math.PI + 0.1);
         ctx.fill();
         ctx.stroke();
 
